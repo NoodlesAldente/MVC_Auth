@@ -3,6 +3,5 @@
 - Mettre en place de sel du mot de passe dans la base de données
 - Mettre en place un token pour envoyer le mot de passe de façon plus sécurisé
 - Faire en sorte que le site soit résistant au rejeux de requête
-- Faire la partie admin
 - Faire la vérification des caractères spéciaux
 - Faire la vérification de la taille de la chaine de caractère envoyer à la bdd
