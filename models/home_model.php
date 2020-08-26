@@ -1,7 +1,8 @@
 <?php
 
-class connexionModel extends model
-{
+require_once "./model.php";
+
+class homeModel extends model {
 
     /**
      * Get nb film, return interger count movie
