@@ -7,7 +7,6 @@
 	rôle				: le contrôleur de la page d'accueil de des films
   ================================================================================================================*/
 
-require_once "./controller.php";
 
 /**
  * Class homeControlleur

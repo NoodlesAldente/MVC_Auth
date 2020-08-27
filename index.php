@@ -1,6 +1,6 @@
 <?php
     // ==========================================================================
-    // 		page de réaiguillage
+    // page de réaiguillage
     // ==========================================================================
     session_start();
     $contenu = "";
@@ -9,7 +9,13 @@
     $link_model = "./models/";
 
     // ==========================================================================
-    // 		on regarde si $_get existe si oui on fait afficher le code pour cela et puis on fait la redirection
+    // Require des fichiers de bases
+    // ==========================================================================
+    require_once $link_controleur . "controller.php";
+    require_once $link_model . "model.php";
+
+    // ==========================================================================
+    // on regarde si $_get existe si oui on fait afficher le code pour cela et puis on fait la redirection
     // ==========================================================================
     if (!empty($_GET['home'])) {
         $titre = "home";
@@ -19,7 +25,7 @@
         $controller = new homeControlleur();
         $controller->setDonnees();
 
-        require_once $link_view . 'home.php'; // Inclusion de la vue de la page home
+        require_once $link_view . 'home_view.php'; // Inclusion de la vue de la page home
 
     } else {
         header("location:./index.php?home=1");
