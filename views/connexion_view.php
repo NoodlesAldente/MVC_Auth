@@ -26,7 +26,20 @@
 </div>
 <div class="container">
 <!--    todo afficher connexion réussite ou non !-->
-    <h1>TODO</h1>
+    <h1>
+        <?php
+            if (isset($_SESSION['user'])) {
+                echo '<h1>Vous êtes connecté</h1><br/>';
+                echo $_SESSION['user']->pseudo_user;
+            } else if (isset($_SESSION['content']['connected']) ) {
+                echo $_SESSION['content']['connected'];
+                echo "<br/>";
+                echo '<a href="./index.php?action=home">Retour à la page de connexion</a>';
+            }
+
+        ?>
+    </h1>
+
 </div>
 <!-- Footer -->
 <!-- Footer -->

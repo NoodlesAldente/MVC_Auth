@@ -1,10 +1,13 @@
 A FAIRE:
 - Mettre en place un token pour envoyer le mot de passe de façon plus sécurisé
-- Faire en sorte que le site soit résistant au rejeux de requête
+- Ou a la place du token mettre en place un chiffrement assymétrique pour le mot de passe
 - Faire la vérification des caractères spéciaux
 - Faire la vérification de la taille de la chaine de caractère envoyer à la bdd
+- Faire l'inscription
+- Faire la page pour la déconnexion
 
 FAIT:
 - Faire la base de données
 - Mettre en place de sel du mot de passe dans la base de données
 - Faire la connexion du site à la base de données
+- Faire en sorte que le site soit résistant au rejeux de requête

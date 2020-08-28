@@ -37,6 +37,7 @@
                 <input class="form-control" type="text" name="username" id="username" required>
                 <label for="password">Password:</label>
                 <input class="form-control" type="password" name="password" id="password" required><br>
+                <input type="text" name="fingerPrint" style="visibility: hidden;" value="<?php echo isset($_SESSION['fingerPrint']) ? $_SESSION['fingerPrint'] : ''; ?>">
                 <button type="submit" class="btn btn-outline-primary">Sign in </button>
             </form>
             </div>
