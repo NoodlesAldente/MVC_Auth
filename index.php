@@ -24,7 +24,7 @@
     // ==========================================================================
     // on regarde si $_get existe si oui on fait afficher le code pour cela et puis on fait la redirection
     // ==========================================================================
-    if (!empty($_GET['home'])) {
+    if (!empty($_GET['action'] == "home")) {
         $titre = "home";
         require_once $link_controleur . 'home_controller.php'; 	// Inclusion du controlleur de la page home
         require_once $link_model . 'home_model.php'; // Inclusion du model de la page home
@@ -34,7 +34,7 @@
 
         require_once $link_view . 'home_view.php'; // Inclusion de la vue de la page home
 
-    } else if (!empty($_GET['connexion'])) {
+    } else if (!empty($_GET['action'] == "connexion")) {
 //        $titre = "home";
 //        require_once $link_controleur . 'home_controller.php'; 	// Inclusion du controlleur de la page home
 //        require_once $link_model . 'home_model.php'; // Inclusion du model de la page home
@@ -45,7 +45,7 @@
 //        require_once $link_view . 'home_view.php'; // Inclusion de la vue de la page home
         echo "page de connexion";
     } else {
-        header("location:./index.php?home=1");
+        header("location:./index.php?action=home");
         exit() ;
 
     }
