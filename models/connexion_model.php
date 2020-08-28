@@ -1,6 +1,6 @@
 <?php
 
-class home_model extends model {
+class connexion_Model extends model {
 
     /**
      * Get nb film, return interger count movie

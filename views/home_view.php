@@ -27,12 +27,12 @@
 <div class="container">
     <div class="row">
         <div class="col-4 ">
-            <img src="../Pictures/lock.png" alt="locker">
+            <img src="./Pictures/lock.png" alt="locker">
         </div>
         <div class="col-4 ">
             <h2>Sign In</h2>
             <p>Please connect with your username and password</p>
-            <form method="post" action="">
+            <form method="post" action="./index.php?connexion=1">
                 <label for="username">Username:</label>
                 <input class="form-control" type="text" name="username" id="username" required>
                 <label for="password">Password:</label>

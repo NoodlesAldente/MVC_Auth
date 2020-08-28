@@ -9,12 +9,12 @@
 
 
 /**
- * Class home_controlleur
+ * Class connexion_controller
  */
-class home_controller extends controller {
+class connexion_controller extends controller {
 
     public function __construct() {
-        $this->db = new home_model();
+        $this->db = new connexionModel();
     }
 
     /**

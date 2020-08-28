@@ -17,7 +17,7 @@ abstract class model {
             // récupération des paramètres de configuration relatifs à la base de données
             // ===============================================================================================================
             $serveur 	= "127.0.0.1";
-            $base 		= "cinepassion38";
+            $base 		= "mvc_db";
             $login 		= "admin"; // Indiquer le bon user de la base de données
             $mdp 		= "admin"; // Indiquer le bon mot de passe de la base de données
 
