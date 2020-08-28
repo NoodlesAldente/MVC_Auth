@@ -9,7 +9,7 @@ START TRANSACTION;
 -- ============================================================================
 --   mot de passe par défaut
 -- ============================================================================
-SET @defautMotDePasse = "1xxxxxx!";
+SET @defautMotDePasse = "1xxxxxX!";
 
 -- ============================================================
 --   Suppression et création de la base de données

@@ -61,6 +61,17 @@
         $controller->setDonnees();
         require_once $link_template . 'template.php';
 
+    }  else if (!empty($_GET['action']) && $_GET['action'] == "inscription") {
+        $page = "inscription";
+        $total_link_view = $link_view . $page . '_view.php';
+
+        require_once $link_controleur . $page . '_controller.php';
+        require_once $link_model . $page . '_model.php';
+
+        $controller = new inscription_controller();
+        $controller->setDonnees();
+        require_once $link_template . 'template.php';
+
     } else {
         header("location:./index.php?action=home");
         exit() ;

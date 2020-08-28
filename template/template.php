@@ -32,6 +32,7 @@
     <p class="lead">What's 99% secure is not secure.</p>
     <hr class="my-4">
     <p>this application is only used in the context of learning how to secure user authentication</p>
+    <p> Mot de passe par défaut : 1xxxxxX! </p>
 </div>
 <?php
     if (!empty($total_link_view)) {
