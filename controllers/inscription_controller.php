@@ -1,12 +1,4 @@
 <?php
-/*======= C O N T R O L E U R ====================================================================================
-	fichier				: ./mvc/controleur/film/accueil.inc.php
-	auteur				: Thomas GRAULLE
-	date de création	: semptembre 2018
-	date de modification:
-	rôle				: le contrôleur de la page d'accueil de des films
-  ================================================================================================================*/
-
 
 /**
  * Class connexion_controller
@@ -42,6 +34,9 @@ class inscription_controller extends controller {
             // Il y a eu un rejeu de requête
             $_SESSION['content']['connected'] = "Tentative d'usurpation d'itentié, si erreur veuillez contacter l'administrateur du site";
         } else {
+            // Suppression du fingerprint pour pas qu'il soit rejoué
+            unset($_SESSION['fingerPrint']);
+
             if (empty($_POST['username']) || empty($_POST['password'])) {
                 $_SESSION['content']['connected'] = "Le formulaire a été mal remplie !";
             } else if ($this->db->userExist($_POST['username'])) { // Si l'utilisateur n'existe pas
@@ -61,11 +56,10 @@ class inscription_controller extends controller {
                     } else {
                         $_SESSION['content']['connected'] = "Une erreur innatendu s'est produit, veuillez contacter le gestionnaire du site";
                     }
-
                 }
             }
-
         }
+        sleep(2);
     }
 
     /**

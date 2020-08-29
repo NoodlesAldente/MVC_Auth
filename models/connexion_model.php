@@ -5,9 +5,6 @@ class connexion_model extends model {
     /**
      * Get user if correct credential, this function get the user information if the credential is right
      *
-     * @author Thomas Graulle
-     * @date 27/03/2019
-     *
      * @throws Exception
      *
      * @param string $loginUser
