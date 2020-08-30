@@ -12,7 +12,24 @@ abstract class controller {
      * @throws Exception
      */
     protected function setDonnees() {
+        // ===============================================================================================================
+        // Encryption part
+        // ===============================================================================================================
+        $this->prepareTheEncryption(7); // La valeur correspond à la taille de la clef souhaité
+    }
 
+    /**
+     * Prepare the encryption, this function set all the information for the encryption.
+     *   If the public key is not define, I receive it
+     *
+     * @param $numKey: ( De 1 à 8 en fonction du numChamp dans la base de données)
+     *
+     */
+    private function prepareTheEncryption($numKey) {
+        if (empty($_SESSION['rsa'])) {
+            $this->dbRsa = new rsa_model();
+            $_SESSION['rsa'] = $this->dbRsa->getPublicKeyRsa($numKey);
+        }
     }
 
     /**
