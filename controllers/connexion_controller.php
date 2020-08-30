@@ -22,6 +22,8 @@ class connexion_controller extends controller {
         // ===============================================================================================================
         // Teste de la connexion via les informations récupéré
         // ===============================================================================================================
+        // Récupération de la clef privé pour le déchiffrement
+        $this->privateKey = $this->dbRsa->getPrivateKeyRsa($this->rsaKeyType);
         $this->checkConnexion();
     }
 
@@ -36,22 +38,28 @@ class connexion_controller extends controller {
             // Suppression du fingerprint pour pas qu'il soit rejoué
             unset($_SESSION['fingerPrint']);
 
+
             if (empty($_POST['username']) || empty($_POST['password'])) {
                 $_SESSION['content']['connected'] = "Le formulaire a été mal remplie !";
-            } else if (!$this->db->userExist($_POST['username'])) { // Si l'utilisateur n'existe pas
-                $_SESSION['content']['connected'] = "L'utilisateur ou le mot de passe ne correspond pas";
             } else {
-                $user = $_POST['username'];
-                $password = $_POST['password'];
+                // Déchiffrement des données envoyés
+                $dateCrypted = array($_POST['username'], $_POST['password']);
+                $clearDatas = $this->uncrypt($dateCrypted, $this->privateKey);
+                $user = $clearDatas[0];
+                $password = $clearDatas[1];
 
-                $grainSel = $this->db->getGrainSel($user);
-                $passwordHashed = $this->hashPassword($password, $grainSel);
-                $user = $this->db->getUserIfCorrectCredential($user, $passwordHashed); // Return false if the password is wrong
-
-                if ($user) {
-                    $_SESSION['user'] = $user;
-                } else {
+                if (!$this->db->userExist($user)) { // Si l'utilisateur n'existe pas
                     $_SESSION['content']['connected'] = "L'utilisateur ou le mot de passe ne correspond pas";
+                } else {
+                    $grainSel = $this->db->getGrainSel($user);
+                    $passwordHashed = $this->hashPassword($password, $grainSel);
+                    $user = $this->db->getUserIfCorrectCredential($user, $passwordHashed); // Return false if the password is wrong
+
+                    if ($user) {
+                        $_SESSION['user'] = $user;
+                    } else {
+                        $_SESSION['content']['connected'] = "L'utilisateur ou le mot de passe ne correspond pas";
+                    }
                 }
             }
         }

@@ -21,6 +21,8 @@ class inscription_controller extends controller {
         // ===============================================================================================================
         // Fait l'inscription
         // ===============================================================================================================
+        // Récupération de la clef privé pour le déchiffrement
+        $this->privateKey = $this->dbRsa->getPrivateKeyRsa($this->rsaKeyType);
         $this->inscription();
     }
 
@@ -39,22 +41,27 @@ class inscription_controller extends controller {
 
             if (empty($_POST['username']) || empty($_POST['password'])) {
                 $_SESSION['content']['connected'] = "Le formulaire a été mal remplie !";
-            } else if ($this->db->userExist($_POST['username'])) { // Si l'utilisateur n'existe pas
-                $_SESSION['content']['connected'] = "Le nom d'utilisateur est déjà utilisé";
             } else {
-                // La création de l'utilisateur peut se faire correctement après avoir vérifier ses informations
-                $username = $_POST['username'];
-                $password = $_POST['password'];
+                // Déchiffrement des données envoyés
+                $dateCrypted = array($_POST['username'], $_POST['password']);
+                $clearDatas = $this->uncrypt($dateCrypted, $this->privateKey);
+                $username = $clearDatas[0];
+                $password = $clearDatas[1];
 
-                if (!$this->passwordIsValid($password)) {
-                    $_SESSION['content']['connected'] = "Le mot passe ne respecte pas les règles, pour les voir ...";
+                if ($this->db->userExist($username)) {
+                    $_SESSION['content']['connected'] = "Le nom d'utilisateur est déjà utilisé";
                 } else {
-                    $userCreated = $this->db->ajoutUser($username, $password); // Return false si problème
-
-                    if ($userCreated) {
-                        $_SESSION['content']['connected'] = "L'inscription a bien été faite, vous pouvez maintenant vous connecter";
+                    // La création de l'utilisateur peut se faire correctement après avoir vérifier ses informations
+                    if (!$this->passwordIsValid($password)) {
+                        $_SESSION['content']['connected'] = "Le mot passe ne respecte pas les règles, pour les voir ...";
                     } else {
-                        $_SESSION['content']['connected'] = "Une erreur innatendu s'est produit, veuillez contacter le gestionnaire du site";
+                        $userCreated = $this->db->ajoutUser($username, $password); // Return false si problème
+
+                        if ($userCreated) {
+                            $_SESSION['content']['connected'] = "L'inscription a bien été faite, vous pouvez maintenant vous connecter";
+                        } else {
+                            $_SESSION['content']['connected'] = "Une erreur innatendu s'est produit, veuillez contacter le gestionnaire du site";
+                        }
                     }
                 }
             }
@@ -130,35 +137,6 @@ class inscription_controller extends controller {
         }
 
         return $find;
-    }
-
-    /**
-     * checkConnexion, verrifie que la connexion ce soit bien faite ou non
-     */
-    function checkConnexion() {
-        if ($_POST['fingerPrint'] != $_SESSION['fingerPrint']) {
-            // Il y a eu un rejeu de requête
-            $_SESSION['content']['connected'] = "Tentative d'usurpation d'itentié, si erreur veuillez contacter l'administrateur du site";
-        } else {
-            if (empty($_POST['username']) || empty($_POST['password'])) {
-                $_SESSION['content']['connected'] = "Le formulaire a été mal remplie !";
-            } else if (!$this->db->userExist($_POST['username'])) { // Si l'utilisateur n'existe pas
-                $_SESSION['content']['connected'] = "L'utilisateur ou le mot de passe ne correspond pas";
-            } else {
-                $user = $_POST['username'];
-                $password = $_POST['password'];
-
-                $grainSel = $this->db->getGrainSel($user);
-                $passwordHashed = $this->hashPassword($password, $grainSel);
-                $user = $this->db->getUserIfCorrectCredential($user, $passwordHashed); // Return false if the password is wrong
-
-                if ($user) {
-                    $_SESSION['user'] = $user;
-                } else {
-                    $_SESSION['content']['connected'] = "L'utilisateur ou le mot de passe ne correspond pas";
-                }
-            }
-        }
     }
 
     /**

@@ -18,8 +18,7 @@
         <div class="col-4 ">
             <h2>Register</h2>
             <p>Please register with your username and a password</p>
-                <form method="post" action="./index.php?action=inscription" >
-<!--                    onsubmit="let formInscription = new Form(this); return formInscription.isValid()"-->
+                <form method="post" action="./index.php?action=inscription" onsubmit="let formInscription = new Form(this); return formInscription.isValid()">
                 <label for="username">Username:</label>
                     <input class="form-control" type="text" name="username" id="username" required>
                     <label for="password">password:</label>

@@ -5362,7 +5362,7 @@ process.on = function(e, fn){
  * Expose mocha.
  */
 
-var Mocha = global.Mocha = require('mocha'),
+var Mocha = global.Mocha = require('librairie/jsEncrypt/jsencrypt-master/test/mocha'),
     mocha = global.mocha = new Mocha({ reporter: 'html' });
 
 var immediateQueue = []

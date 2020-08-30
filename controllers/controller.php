@@ -15,7 +15,9 @@ abstract class controller {
         // ===============================================================================================================
         // Encryption part
         // ===============================================================================================================
-        $this->prepareTheEncryption(7); // La valeur correspond à la taille de la clef souhaité
+        $this->dbRsa = new rsa_model();
+        $this->rsaKeyType = 7;
+        $this->prepareTheEncryption($this->rsaKeyType); // La valeur correspond à la taille de la clef souhaité
     }
 
     /**
@@ -27,7 +29,6 @@ abstract class controller {
      */
     private function prepareTheEncryption($numKey) {
         if (empty($_SESSION['rsa'])) {
-            $this->dbRsa = new rsa_model();
             $_SESSION['rsa'] = $this->dbRsa->getPublicKeyRsa($numKey);
         }
     }
@@ -68,6 +69,37 @@ abstract class controller {
                 $this->donnees [$cle] [] = $valeur; // If the rencart value is string then I add
             }
         }
+    }
+
+    /**
+     * Uncrypt, this function uncrypt all the information in the array on parameters
+     *
+     * @param array $arrayValueCrypted, array of value crypted
+     * @param string $privateKey
+     *
+     * @return array $uncryptArray: return the array of value uncrypt
+     */
+    protected function uncrypt($arrayValueCrypted, $privateKey) {
+        // ======================================================================
+        // Modification du PATH car le fichier RSA.php fait référence à d'autres fichiers de la
+        // librairie PhpSecLib (Math/BigInteger.php par exemple)
+        // ======================================================================
+        set_include_path(get_include_path() . PATH_SEPARATOR . 'librairie/Phpseclib'); // recommendation of the web site of the new library
+
+        // ==========================================
+        // Instanciate the encryption and set the private key
+        // ==========================================
+        $rsa = new Crypt_RSA();
+        $rsa->setEncryptionMode(CRYPT_RSA_ENCRYPTION_PKCS1);
+        $rsa->loadKey($privateKey);
+
+        $uncryptArray = array();
+
+        foreach ($arrayValueCrypted as $crypted) {
+            $uncryptArray[] = $rsa->decrypt(base64_decode($crypted)); // base64_decode is necesary if you encrypt with jsEncode
+        }
+
+        return $uncryptArray;
     }
 
 }
