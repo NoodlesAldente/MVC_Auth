@@ -23,7 +23,7 @@
     // ==========================================================================
     // Script
     // ==========================================================================
-    $linkJsEncrypt = $link_librairie_js . 'jsencrypt/bin/jsencrypt.js';
+    $linkJsEncrypt = $link_librairie_js . 'jsEncrypt/bin/jsencrypt.js';
     $linkFormulaire = $link_js . 'form.js';
 
     $linkScript = "<script type='text/javascript' src='$linkJsEncrypt'></script>";
@@ -34,9 +34,7 @@
     // ==========================================================================
     require_once $link_controleur . 'controller.php';
     require_once $link_model . 'model.php';
-    if (empty($_SESSION['rsa'])) {
-        require_once $link_model . 'rsa_model.php';
-    }
+    require_once $link_model . 'rsa_model.php';
 
     // ==========================================================================
     // on regarde si $_get existe si oui on fait afficher le code pour cela et puis on fait la redirection

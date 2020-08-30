@@ -47,30 +47,30 @@ class Form {
     isValid() {
         let result = true;
 
-        // Check the condition for all input
-        for (let i = 0; i < this.nbInput; i++) {
-            if (Form.validInput(this.arrayInput[i])) { // the condition of the
-                Form.changeColor(this.arrayInput[i], "white");
-                // the input is good
+        // Cette partie est désactivé car pas envie de le mettre en place
 
-            } else {
-                // forms is NOT valid
-                result = false;
-                Form.changeColor(this.arrayInput[i], "#f009");
-                this.emptyForm(this.arrayInput[i]);
-            }
-        }
+        // // Check the condition for all input
+        // for (let i = 0; i < this.nbInput; i++) {
+        //     if (Form.validInput(this.arrayInput[i])) { // the condition of the
+        //         Form.changeColor(this.arrayInput[i], "white");
+        //         // the input is good
+        //
+        //     } else {
+        //         // forms is NOT valid
+        //         result = false;
+        //         Form.changeColor(this.arrayInput[i], "#f009");
+        //         this.emptyForm(this.arrayInput[i]);
+        //     }
+        // }
 
         if (result) { // Do the encryption of the information of the form
-
             // Instance jsencrypt
             let encryption = new JSEncrypt();
             encryption.setPublicKey(rsaPublicKey);
 
             for (let i = 0; i < this.nbInput; i++) {
-                this.arrayInputHidden[i].value = encryption.encrypt(this.arrayInput[i].value);
+                this.arrayInput[i].value = encryption.encrypt(this.arrayInput[i].value); // On remplace la valeur
             }
-
         }
 
         return result;
@@ -132,6 +132,7 @@ class Form {
      * KeyBoard, this function envent to keyboard
      *
      * @param input, input to check
+     * @param hiddenString, ??
      * @returns {boolean}, return true if the forms is valid
      */
     static onkeydown(input, hiddenString) {
