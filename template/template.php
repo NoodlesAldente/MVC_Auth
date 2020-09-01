@@ -19,7 +19,16 @@
             echo "var rsaPublicKey = `" . $_SESSION["rsa"] . "`;"; // Create the js variable for the public key
         }
         ?>
+
+        window.onload=function() {
+            document.body.style.display='block';
+        }
     </script>
+    <style>
+        body {
+            display: none;
+        }
+    </style>
     <title>Authentication App</title>
 </head>
 <body>

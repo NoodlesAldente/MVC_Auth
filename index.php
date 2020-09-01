@@ -35,7 +35,7 @@
     require_once $link_controleur . 'controller.php';
     require_once $link_model . 'model.php';
     require_once $link_model . 'rsa_model.php';
-    require_once $link_librairie . '/Phpseclib/Crypt/RSA.php'; // todo finish
+    require_once $link_librairie . '/Phpseclib/Crypt/RSA.php';
 
     // ==========================================================================
     // on regarde si $_get existe si oui on fait afficher le code pour cela et puis on fait la redirection
